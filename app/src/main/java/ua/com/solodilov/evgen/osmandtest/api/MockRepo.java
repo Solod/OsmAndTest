@@ -1,0 +1,50 @@
+package ua.com.solodilov.evgen.osmandtest.api;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import ua.com.solodilov.evgen.osmandtest.interfaces.ObserverRepository;
+import ua.com.solodilov.evgen.osmandtest.interfaces.RepositoryItem;
+import ua.com.solodilov.evgen.osmandtest.models.Region;
+
+public class MockRepo implements RepositoryItem {
+
+    ObserverRepository mObserverRepository;
+    List<Region> mList = new ArrayList<>();
+
+    @Override
+    public void loadRegionList(String nodes) {
+        mList.add(new Region("Africa", true, true));
+        mList.add(new Region("Ukraine", false, false));
+        mList.add(new Region("Germany", false, true));
+        mList.add(new Region("Evrope", true, true));
+        mList.add(new Region("Asia", true, true));
+        Collections.sort(mList, new Comparator<Region>() {
+            @Override
+            public int compare(Region o1, Region o2) {
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
+        notifyObserver();
+    }
+
+    @Override
+    public void registerObserver(ObserverRepository o) {
+        mObserverRepository = o;
+
+    }
+
+    @Override
+    public void removeObserver() {
+        mObserverRepository = null;
+
+    }
+
+    @Override
+    public void notifyObserver() {
+        mObserverRepository.update(mList);
+
+    }
+}
