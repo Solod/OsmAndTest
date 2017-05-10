@@ -2,7 +2,9 @@ package ua.com.solodilov.evgen.osmandtest.ui;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -13,13 +15,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ua.com.solodilov.evgen.osmandtest.R;
 import ua.com.solodilov.evgen.osmandtest.adapter.RVAdapter;
 import ua.com.solodilov.evgen.osmandtest.api.XMLRepo;
+import ua.com.solodilov.evgen.osmandtest.dm.DownloadObservable;
+import ua.com.solodilov.evgen.osmandtest.dm.DownloadObserver;
 import ua.com.solodilov.evgen.osmandtest.interfaces.ObserverRepository;
 import ua.com.solodilov.evgen.osmandtest.interfaces.OnRegionFragment;
 import ua.com.solodilov.evgen.osmandtest.interfaces.RepositoryItem;
@@ -34,9 +42,10 @@ public class RegionFragment extends Fragment implements ObserverRepository, RVAd
     RepositoryItem mRepositoryItem;
     String mParentRegion;
     private OnRegionFragment mListener;
+    private Handler h;
+    private int progresStatus;
 
-    public RegionFragment() {
-    }
+    private DownloadObservable downloadObservable = new DownloadObservable();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +57,13 @@ public class RegionFragment extends Fragment implements ObserverRepository, RVAd
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, getActivity());
+        h = new Handler();
+
         mParentRegion = getArguments().getString(KEY_ARGUMENT);
+        initActionbar();
+    }
+
+    private void initActionbar() {
         ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) actionBar.setTitle(mParentRegion);
     }
@@ -106,14 +121,17 @@ public class RegionFragment extends Fragment implements ObserverRepository, RVAd
     public void onChangeRegion(Region region) {
         if (!region.isHasMap()) {
             mListener.applyRegionFragment(region.getName());
-        }else {
-            showSnackBar("download map: " + region.getName());
+        } else {
+            startDownload(region);
         }
     }
 
-    private void showSnackBar(String s) {
-        Snackbar.make(mRecyclerRegions,s, Snackbar.LENGTH_LONG)
+    private void startDownload(Region region) {
+        Snackbar.make(mRecyclerRegions, region.getName(), Snackbar.LENGTH_LONG)
                 .setActionTextColor(Color.RED)
                 .show();
+        DownloadObserver observer = new DownloadObserver();
+        observer.setRegion(region);
+        ((MainActivity)getActivity()).startDownload(Uri.parse(region.getUri()), observer);
     }
 }

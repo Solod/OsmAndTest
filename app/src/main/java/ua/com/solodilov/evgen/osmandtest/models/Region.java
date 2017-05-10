@@ -1,6 +1,8 @@
 package ua.com.solodilov.evgen.osmandtest.models;
 
 public class Region {
+    private String uri;
+
     public Region() {
     }
 
@@ -50,5 +52,10 @@ public class Region {
     @Override
     public String toString() {
         return "Name: "+getName()+" Continent: "+ isContinent()+" Child: " + isHasMap();
+    }
+
+    public String getUri() {
+        uri = "http://bm.img.com.ua/nxs/img/prikol/images/large/3/9/315193.jpg";
+        return uri;
     }
 }

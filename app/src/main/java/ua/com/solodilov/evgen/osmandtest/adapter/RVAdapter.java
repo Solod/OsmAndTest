@@ -1,11 +1,15 @@
 package ua.com.solodilov.evgen.osmandtest.adapter;
 
 
+import android.content.AsyncQueryHandler;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -70,7 +74,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         ImageView mContinent;
         @BindView(R.id.iv_ic_import)
         ImageView mImport;
-        private View mRootView;
+        @BindView(R.id.pb_loader)
+        ProgressBar mProgressBar;
+        View mRootView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -81,10 +87,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 public void onClick(View v) {
                     if (mListener != null) {
                         mListener.onChangeRegion(mList.get(getAdapterPosition()));
+                        mProgressBar.setVisibility(View.VISIBLE);
+                        mImport.setImageResource(R.drawable.ic_action_remove_dark);
                     }
                 }
             });
         }
-
     }
 }
