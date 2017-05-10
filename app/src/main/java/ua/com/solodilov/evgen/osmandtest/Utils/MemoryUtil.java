@@ -9,12 +9,8 @@ import java.math.RoundingMode;
 
 import static android.provider.Telephony.ThreadsColumns.ERROR;
 
-/**
- * Created by jack on 07.05.17.
- */
-
 public class MemoryUtil {
-    public static boolean externalMemoryAvailable() {
+    private static boolean externalMemoryAvailable() {
         return android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED);
     }

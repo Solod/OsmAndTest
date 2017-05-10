@@ -36,7 +36,7 @@ public class ContinentFragment extends Fragment implements ObserverRepository, R
     @BindView(R.id.progressBar)
     protected ProgressBar mProgressBar;
     @BindView(R.id.tv_memory_size)
-    protected TextView mFildMemorySize;
+    protected TextView mFieldMemorySize;
     RVAdapter mRvAdapter;
     RepositoryItem mRepositoryItem;
     private OnRegionFragment mListener;
@@ -108,11 +108,11 @@ public class ContinentFragment extends Fragment implements ObserverRepository, R
         long totalMemory = Long.parseLong(MemoryUtil.getTotalInternalMemorySize());
         long freeMemory = Long.parseLong(MemoryUtil.getAvailableInternalMemorySize());
 
-        String str = mFildMemorySize.getText() + "<b> " + MemoryUtil.formatSize(freeMemory) + "</b>";
+        String str = mFieldMemorySize.getText() + "<b> " + MemoryUtil.formatSize(freeMemory) + "</b>";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            mFildMemorySize.setText(Html.fromHtml(str, Html.FROM_HTML_MODE_LEGACY));
+            mFieldMemorySize.setText(Html.fromHtml(str, Html.FROM_HTML_MODE_LEGACY));
         } else {
-            mFildMemorySize.setText(Html.fromHtml(str));
+            mFieldMemorySize.setText(Html.fromHtml(str));
         }
         mProgressBar.setMax((int) (totalMemory / 1000));
         mProgressBar.setProgress((int) (freeMemory / 1000));

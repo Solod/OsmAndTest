@@ -11,15 +11,15 @@ import ua.com.solodilov.evgen.osmandtest.models.Region;
 
 public class MockRepo implements RepositoryItem {
 
-    ObserverRepository mObserverRepository;
-    List<Region> mList = new ArrayList<>();
+    private ObserverRepository mObserverRepository;
+    private List<Region> mList = new ArrayList<>();
 
     @Override
     public void loadRegionList(String nodes) {
         mList.add(new Region("Africa", true, true));
         mList.add(new Region("Ukraine", false, false));
         mList.add(new Region("Germany", false, true));
-        mList.add(new Region("Evrope", true, true));
+        mList.add(new Region("Europe", true, true));
         mList.add(new Region("Asia", true, true));
         Collections.sort(mList, new Comparator<Region>() {
             @Override

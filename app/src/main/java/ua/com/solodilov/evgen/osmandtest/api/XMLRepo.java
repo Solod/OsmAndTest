@@ -21,7 +21,6 @@ import ua.com.solodilov.evgen.osmandtest.models.Region;
 
 public class XMLRepo implements RepositoryItem {
 
-    private static final String LOG_TAG = "My LOG: ";
     private Context mContext;
     private ObserverRepository mObserverRepository;
     private List<Region> mList = new LinkedList<>();

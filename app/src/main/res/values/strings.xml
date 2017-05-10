@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">OsmAnd Test</string>
-    <string name="action_settings">Settings</string>
     <string name="label_device_memory">Device memory</string>
     <string name="label_free">Free:</string>
     <string name="label_world_regions">World regions</string>

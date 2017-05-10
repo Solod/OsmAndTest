@@ -30,9 +30,9 @@ public class RegionFragment extends Fragment implements ObserverRepository, RVAd
     @BindView(R.id.rv_word_regions)
     protected RecyclerView mRecyclerRegions;
 
-    RVAdapter mRvAdapter;
-    RepositoryItem mRepositoryItem;
-    String mParentRegion;
+    private RVAdapter mRvAdapter;
+    private RepositoryItem mRepositoryItem;
+    private String mParentRegion;
     private OnRegionFragment mListener;
 
     public RegionFragment() {
